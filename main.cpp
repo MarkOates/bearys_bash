@@ -13997,12 +13997,15 @@ void game_loop()
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 
 	al_start_timer(timer);
-
+	double time_increment = 0.0; // fractional time in hundredths of a second (10ms)
    while (!abort_game)
    {
        if(!al_is_event_queue_empty(event_queue))
        {
-				ten_mili_seconds += 6000;
+	 time_increment += 100.0/60.0;
+	 double whole_units = floor(time_increment);
+	 ten_mili_seconds += int(whole_units);
+	 time_increment -= whole_units;
 
            //process = 0;
            do_logic();
