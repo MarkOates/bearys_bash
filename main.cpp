@@ -9391,11 +9391,11 @@ void write_outline_right_alfont_aa(int x, int y, ALFONT_FONT *f, int size, ALLEG
 
 int get_min(int t)
 {
-    return (int)(((float)t/(float)100)/(float)60);
+  return (t / 6000);
 }    
 int get_sec(int t)
 {
-	return (t - ((int)(((float)t/(float)100)/(float)60))*6000)/100;
+  return (t / 100) % 60;
 }    
 int get_hun_sec(int t)
 {
@@ -13773,36 +13773,16 @@ void draw_map_backgrounds()
 //#include <stdio.h>
 #include <stdlib.h>
 
-string convoit_it(int i)
-{
-/*
-  char buffer [33];
-  scanf ("%d",&i);
-  itoa (i,buffer,10);
-string s = buffer;
-*/
-	std::stringstream ss;
-	ss << i;
-  return ss.str();
-}
-
 string construct_time_string(int time_in_hsec)
 {
     int min = get_min(time_in_hsec);
     int sec = get_sec(time_in_hsec);
     int hsec = get_hun_sec(time_in_hsec);
-
-    string str;
-
-    str.append(convoit_it(min));
-    str.append(":");
-    if (sec < 10) str.append("0");
-    str.append(convoit_it(sec));
-    str.append(":");
-    if (hsec < 10) str.append("0");
-    str.append(convoit_it(hsec));
-
-    return str;
+    std::stringstream ss;
+    ss.fill('0');
+    ss.width(2);
+    ss << min << ":" << sec << ":" << hsec;
+    return ss.str();
 }
 
 int draw_finished_round_scores()
@@ -13818,7 +13798,7 @@ int draw_finished_round_scores()
         if (finished_round_counter < FINISHED_ROUND_DURATION-(FINISHED_ROUND_DURATION/8)*next_multiplier)
         {
             write_outline_right_alfont_aa(left_x_pos, initial_y_pos, new_font, 18, HAPPY_YELLOW, "Finished time:");
-            _write_outline_alfont_aa(right_x_pos, initial_y_pos, new_font, 18, HAPPY_YELLOW, construct_time_string(time_when_completed).c_str());
+            _write_outline_alfont_aa(right_x_pos, initial_y_pos, new_font, 18, HAPPY_YELLOW, construct_time_string(time_when_completed));
             initial_y_pos += 20;
             next_multiplier++;
         }
@@ -13835,7 +13815,7 @@ int draw_finished_round_scores()
             {
                 write_outline_right_alfont_aa(left_x_pos, initial_y_pos, new_font, 18, HAPPY_YELLOW, "Time to Kill em all:");
 
-                _write_outline_alfont_aa(right_x_pos, initial_y_pos, new_font, 18, HAPPY_YELLOW, construct_time_string(time_to_kill_all_the_bears).c_str());
+                _write_outline_alfont_aa(right_x_pos, initial_y_pos, new_font, 18, HAPPY_YELLOW, construct_time_string(time_to_kill_all_the_bears));
                 initial_y_pos += 20;
                 next_multiplier++;
             }    
