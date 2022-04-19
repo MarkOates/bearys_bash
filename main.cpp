@@ -1033,8 +1033,8 @@ void my_error_message(std::string mess, ...)
      textprintf_centre(screen, font_small, SCREEN_W/2, SCREEN_H/2-text_height(font_small)/2-7, makecol(255,128+32,128), buf);
 */
 std::cout << "my_error_message(): " << mess << std::endl;
-     clear_keybuf();
-     readkey();
+     //clear_keybuf();
+     //readkey();
 }
 
 
@@ -1050,9 +1050,9 @@ void my_error_message2(std::string mess, ...)
      rectfill(screen, SCREEN_W/2-(text_length(font_small, buf) + 40)/2, 100, SCREEN_W/2+(text_length(font_small, buf) + 20)/2, SCREEN_H-100, makecol(64,16,0));
      textprintf_centre(screen, font_small, SCREEN_W/2, SCREEN_H/2-text_height(font_small)/2-7, makecol(255,128+32,128), buf);
 */
-std::cout << "my_error_message2(): " << mess << std::endl;
-     clear_keybuf();
-     readkey();
+   std::cout << "my_error_message2(): " << mess << std::endl;
+   //clear_keybuf();
+   //readkey();
 }
 
 
@@ -1228,11 +1228,13 @@ int initialize_graphics(void)
 
 	font = al_create_builtin_font();
 
-	ALLEGRO_DISPLAY *display = al_create_display(SCREEN_W*3, SCREEN_H*3);
+   int scale = 10;
+   //al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+	ALLEGRO_DISPLAY *display = al_create_display(SCREEN_W*scale, SCREEN_H*scale);
 	buffer = al_get_backbuffer(display);
 	ALLEGRO_TRANSFORM t;
 	al_identity_transform(&t);
-	al_scale_transform(&t, 3, 3);
+	al_scale_transform(&t, scale, scale);
 	al_orthographic_transform(&t, 0, 0, -1.0, al_get_bitmap_width(buffer),
                           al_get_bitmap_height(buffer), 1.0);
 	al_set_target_bitmap(buffer);
