@@ -1849,7 +1849,8 @@ void play_random_splat_sound()
         current_played = (rand())%(splat.size());
         if ((current_played != last_played) && (current_played != second_to_last_played)) exit_loop = true;
     }
-    play_sample(splat[current_played].sound, 255, 128, 1000, FALSE);
+    //play_sample(splat[current_played].sound, 255, 128, 1000, FALSE);
+    std::cout << "play sound disabled" << std::endl;
 }
 
 
