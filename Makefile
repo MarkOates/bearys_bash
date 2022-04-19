@@ -1,10 +1,17 @@
 
 
+ALLEGRO_LIBS=allegro_color allegro_font allegro_ttf allegro_dialog allegro_audio allegro_acodec allegro_primitives allegro_image allegro
+ALLEGRO_LIBS_MAIN=$(ALLEGRO_LIBS) allegro_main
+ALLEGRO_LIBS_LINK_ARGS := $(ALLEGRO_LIBS:%=-l%)
+ALLEGRO_LIBS_LINK_MAIN_ARGS := $(ALLEGRO_LIBS_MAIN:%=-l%)
 
 
-all: main.cpp
-	g++ -c -o obj/main.o main.cpp -IE:/allegro-5.1.11-mingw-edgar/include
-	g++ -o bin/bearys_bash obj/main.o -LE:/allegro-5.1.11-mingw-edgar/lib -lallegro_monolith-debug.dll -mwindows
+objs: main.cpp
+	g++ -c -o obj/main.o main.cpp
+
+
+programs: obj/main.o
+	g++ -o bin/bearys_bash obj/main.o $(ALLEGRO_LIBS_LINK_MAIN_ARGS)
 
 
 
